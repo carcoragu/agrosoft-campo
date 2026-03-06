@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroSoft | Compra de Animales</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  margin:0;
+  background: #203a43;
+  background: -webkit-linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
+}
+header{
+  text-align:center;
+  padding:20px;
+  background:#0a1f2e;
+}
+header h1{
+  margin:0;
+  font-size:22px;
+}
+.container{
+  padding:15px;
+}
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  border-radius:8px;
+  border:none;
+  font-size:14px;
+}
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  background:#28a745;
+  color:white;
+}
+button.secondary{
+  background:#007bff;
+}
+button.danger{
+  background:#dc3545;
+}
+.table{
+  margin-top:15px;
+  background:white;
+  color:black;
+  border-radius:10px;
+  padding:10px;
+  overflow-x:auto;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+th, td{
+  padding:6px;
+  border-bottom:1px solid #ccc;
+  font-size:13px;
+}
+.total{
+  margin-top:15px;
+  font-size:18px;
+  font-weight:bold;
+  text-align:right;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+<h1>AgroSoft | Campo</h1>
+<small>IsabSoft Soluciones Oportunas</small>
+</header>
+
+<div class="container">
+
+<h3>Datos de la Compra</h3>
+<label>Nº Compra</label>
+<input type="text" id="numeroCompra" readonly>
+<label>Fecha</label>
+<input type="date" id="fecha">
+<label>Proveedor</label>
+<input type="text" id="proveedor">
+<label>CI / RUC</label>
+<input type="text" id="ci">
+<label>Documento</label>
+<input type="text" id="documento">
+
+<hr>
+
+<h3>Detalle de Animales</h3>
+<input type="text" id="caravana" placeholder="Nº Caravana">
+<input type="number" id="peso" placeholder="Peso Vivo (kg)">
+<input type="number" id="precioKg" placeholder="Precio por Kg (Gs.)">
+<input type="number" id="precioAnimal" placeholder="Precio Cerrado (Gs.)">
+<button onclick="agregarAnimal()">Agregar Animal</button>
+
+<div class="table">
+<table id="tablaAnimales">
+<thead>
+<tr>
+<th>Caravana</th>
+<th>Peso</th>
+<th>Precio Kg</th>
+<th>Precio Cerrado</th>
+<th>Total Gs.</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+
+<div class="total">
+Total Animales: ₲ <span id="totalAnimales">0</span><br>
+Precio real de costo por animal: ₲ <span id="precioReal">0</span>
+</div>
+
+<hr>
+
+<h3>Gastos de la Operación</h3>
+<label>Fecha</label>
+<input type="date" id="fechaGasto">
+<label>Tipo de Gasto</label>
+<select id="tipoGastoCompra">
+<option value="flete">Flete</option>
+<option value="comision">Pago de Comisión</option>
+<option value="colcat">Pago a COLCAT</option>
+<option value="varios">Varios</option>
+</select>
+<label>Cantidad</label>
+<input type="number" id="cantidadGastoCompra" placeholder="Cantidad">
+<label>Importe Unitario</label>
+<input type="number" id="importeUnitarioGastoCompra" placeholder="Importe Unitario">
+<label>Observación</label>
+<textarea id="obsGastoCompra" placeholder="Observación"></textarea>
+<button onclick="agregarGastoCompra()">Agregar Gasto</button>
+
+<div class="table">
+<table id="tablaGastosCompra">
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Tipo</th>
+<th>Total</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+
+<div class="total">
+Total Gastos: ₲ <span id="totalGastosCompra">0</span>
+</div>
+
+<hr>
+<button onclick="exportarCompraYGastosCSV()">Exportar Compra + Gastos CSV</button>
+
+<script>
+// --- Control de versión de prueba (30 días) ---
+(function(){
+    const hoy = new Date();
+    const fechaInicio = localStorage.getItem("fechaInicio");
+    if(!fechaInicio){
+        localStorage.setItem("fechaInicio", hoy.toISOString());
+    } else {
+        const inicio = new Date(fechaInicio);
+        const diffDias = Math.floor((hoy - inicio) / (1000*60*60*24));
+        if(diffDias > 31){
+            alert("El período de funcionalidad ha finalizado, necesita mantenimiento.");
+            document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;color:red;'>Período de funcionalidad finalizado</h2>";
+            throw new Error("Fin del período de funcionalidad operativa");
+        }
+    }
+})();
+
+// --- Contador automático de compras ---
+let contadorCompra = localStorage.getItem("contadorCompra") || 1;
+function actualizarNumeroCompra(){
+    document.getElementById("numeroCompra").value = "COMP-" + String(contadorCompra).padStart(4,'0');
+}
+actualizarNumeroCompra();
+document.getElementById("fecha").valueAsDate = new Date();
+
+// --- Animales ---
+let animales = [];
+let totalAnimales = 0;
+let gastosCompra = [];
+let totalGastosCompra = 0;
+
+function agregarAnimal(){
+    let caravana = document.getElementById("caravana").value;
+    let peso = parseFloat(document.getElementById("peso").value) || 0;
+    let precioKg = parseFloat(document.getElementById("precioKg").value) || 0;
+    let precioAnimal = parseFloat(document.getElementById("precioAnimal").value) || 0;
+
+    if(!caravana){ alert("Caravana obligatoria"); return; }
+
+    let total = precioAnimal>0 ? precioAnimal : peso*precioKg;
+    if(total<=0){ alert("Debe ingresar precio válido"); return; }
+
+    animales.push({caravana,peso,precioKg,precioAnimal,total});
+    totalAnimales += total;
+    actualizarTablaAnimales();
+    limpiarCamposAnimal();
+    actualizarPrecioReal();
+}
+
+function actualizarTablaAnimales(){
+    let tbody = document.querySelector("#tablaAnimales tbody");
+    tbody.innerHTML="";
+    animales.forEach((a,i)=>{
+        tbody.innerHTML += `<tr>
+            <td>${a.caravana}</td>
+            <td>${a.peso}</td>
+            <td>${a.precioKg}</td>
+            <td>${a.precioAnimal}</td>
+            <td>${a.total.toLocaleString()}</td>
+            <td><button onclick="eliminarAnimal(${i})">X</button></td>
+        </tr>`;
+    });
+    document.getElementById("totalAnimales").innerText = totalAnimales.toLocaleString();
+}
+
+function eliminarAnimal(i){
+    totalAnimales -= animales[i].total;
+    animales.splice(i,1);
+    actualizarTablaAnimales();
+    actualizarPrecioReal();
+}
+
+function limpiarCamposAnimal(){
+    document.getElementById("caravana").value="";
+    document.getElementById("peso").value="";
+    document.getElementById("precioKg").value="";
+    document.getElementById("precioAnimal").value="";
+}
+
+// --- Gastos ---
+function agregarGastoCompra(){
+    let fecha = document.getElementById("fechaGasto").value;
+    let tipo = document.getElementById("tipoGastoCompra").value;
+    let cantidad = parseFloat(document.getElementById("cantidadGastoCompra").value) || 0;
+    let importeUnitario = parseFloat(document.getElementById("importeUnitarioGastoCompra").value) || 0;
+    let obs = document.getElementById("obsGastoCompra").value;
+
+    if(!fecha || cantidad <=0 || importeUnitario<=0){
+        alert("Complete todos los campos de gasto correctamente");
+        return;
+    }
+
+    let total = cantidad*importeUnitario;
+    let idMovilGasto = document.getElementById("numeroCompra").value + "-" + Date.now();
+
+    gastosCompra.push({idMovilGasto, fecha, tipo, cantidad, importeUnitario, total, obs});
+    totalGastosCompra += total;
+    actualizarTablaGastosCompra();
+    limpiarCamposGastoCompra();
+    actualizarPrecioReal();
+}
+
+function actualizarTablaGastosCompra(){
+    let tbody = document.querySelector("#tablaGastosCompra tbody");
+    tbody.innerHTML = "";
+    gastosCompra.forEach((g,i)=>{
+        tbody.innerHTML += `<tr>
+            <td>${g.fecha}</td>
+            <td>${g.tipo}</td>
+            <td>${g.total.toLocaleString()}</td>
+            <td><button onclick="eliminarGastoCompra(${i})">X</button></td>
+        </tr>`;
+    });
+    document.getElementById("totalGastosCompra").innerText = totalGastosCompra.toLocaleString();
+}
+
+function eliminarGastoCompra(i){
+    totalGastosCompra -= gastosCompra[i].total;
+    gastosCompra.splice(i,1);
+    actualizarTablaGastosCompra();
+    actualizarPrecioReal();
+}
+
+function limpiarCamposGastoCompra(){
+    document.getElementById("fechaGasto").value = new Date().toISOString().split('T')[0];
+    document.getElementById("tipoGastoCompra").selectedIndex = 0;
+    document.getElementById("cantidadGastoCompra").value = "";
+    document.getElementById("importeUnitarioGastoCompra").value = "";
+    document.getElementById("obsGastoCompra").value = "";
+}
+
+// --- Calculo Precio Real por Animal ---
+function actualizarPrecioReal(){
+    let cantidadAnimales = animales.length;
+    let precioReal = cantidadAnimales>0 ? (totalAnimales + totalGastosCompra)/cantidadAnimales : 0;
+    document.getElementById("precioReal").innerText = precioReal.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+// --- Exportar CSV ---
+function exportarCompraYGastosCSV(){
+    let codOperacion = document.getElementById("numeroCompra").value;
+    let fechaCompra = document.getElementById("fecha").value;
+
+    // CSV Animales
+    let contenidoAnimales = "IdMovil,CodOperacion,FechaCompra,Animal,Peso,PrecioKg,PrecioCerrado,Total\n";
+    animales.forEach(a=>{
+        let idMovil = codOperacion + "-" + a.caravana + "-" + Date.now();
+        contenidoAnimales += `${idMovil},${codOperacion},${fechaCompra},${a.caravana},${a.peso},${a.precioKg},${a.precioAnimal},${a.total}\n`;
+    });
+    let blobAnimales = new Blob([contenidoAnimales], {type:"text/csv"});
+    let a1 = document.createElement("a");
+    a1.href = URL.createObjectURL(blobAnimales);
+    a1.download = "Compra_" + codOperacion + ".csv";
+    a1.click();
+
+    // CSV Gastos
+    let contenidoGastos = "IdMovil,CodOperacion,FechaGasto,Tipo,Cantidad,ImporteUnitario,Total,Observaciones\n";
+    gastosCompra.forEach(g=>{
+        contenidoGastos += `${g.idMovilGasto},${codOperacion},${g.fecha},${g.tipo},${g.cantidad},${g.importeUnitario},${g.total},"${g.obs}"\n`;
+    });
+    let blobGastos = new Blob([contenidoGastos], {type:"text/csv"});
+    let a2 = document.createElement("a");
+    a2.href = URL.createObjectURL(blobGastos);
+    a2.download = "Gastos_Compra_" + codOperacion + ".csv";
+    a2.click();
+
+    // Incrementar contador de compra
+    contadorCompra++;
+    localStorage.setItem("contadorCompra", contadorCompra);
+    animales = [];
+    gastosCompra = [];
+    totalAnimales = 0;
+    totalGastosCompra = 0;
+    actualizarNumeroCompra();
+    actualizarTablaAnimales();
+    actualizarTablaGastosCompra();
+    actualizarPrecioReal();
+}
+</script>
+
+</body>
+</html>
