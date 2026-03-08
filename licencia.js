@@ -1,20 +1,35 @@
-// licencia.js
-let planActual = localStorage.getItem("plan") || "Estándar";
-
-function activarPlan(clave){
-    const claves = {
-        "ESTANDAR123":"Estándar",
-        "PREMIUM456":"Premium",
-        "PRO789":"PRO"
-    };
-    if(claves[clave]){
-        planActual = claves[clave];
-        localStorage.setItem("plan", planActual);
-        alert("Plan activado: " + planActual);
-        if(planActual !== "Estándar"){
-            document.getElementById("btnHistorial").style.display="block";
-        }
+// --- Periodo de prueba 30 días ---
+(function(){
+    const hoy = new Date();
+    const fechaInicio = localStorage.getItem("fechaInicio");
+    if(!fechaInicio){
+        localStorage.setItem("fechaInicio", hoy.toISOString());
     } else {
-        alert("Clave inválida");
+        const inicio = new Date(fechaInicio);
+        const diffDias = Math.floor((hoy - inicio) / (1000*60*60*24));
+        if(diffDias > 30){
+            alert("El período de prueba de 30 días ha finalizado. Contacte soporte.");
+            document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;color:red;'>Prueba finalizada</h2>";
+            throw new Error("Fin del periodo de prueba");
+        }
     }
+})();
+
+// --- Planes Estándar y Premium ---
+function activarPlan(plan) {
+    localStorage.setItem("planActivo", plan);
+    localStorage.setItem("fechaActivacion", new Date().toISOString());
+    document.getElementById("planActivo").innerText = plan;
+}
+
+function verificarLicencia() {
+    const plan = localStorage.getItem("planActivo");
+    if(!plan) throw new Error("Debe activar un plan");
+    return plan;
+}
+
+function activarPlanSeleccionado() {
+    const sel = document.getElementById("planSelect").value;
+    if(!sel){ alert("Seleccione un plan"); return; }
+    activarPlan(sel);
 }
