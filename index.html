@@ -1,106 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#28a745">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgroSoft | Campo</title>
-
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#28a745">
 <style>
-body{
-  font-family: Arial, sans-serif;
-  margin:0;
-  background: #203a43;
-  background: -webkit-linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:#fff;
-}
-header{
-  text-align:center;
-  padding:20px;
-  background:#0a1f2e;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-header h1{ margin:0; font-size:22px; }
-header small{ display:block; font-size:12px; color:#ccc; }
-.logo-animada { width:80px; margin-right:15px; animation:girar 5s linear infinite; }
-@keyframes girar { 0% {transform:rotate(0deg);} 50% {transform:rotate(180deg);} 100% {transform:rotate(360deg);} }
-.container{ padding:15px; }
-input, select, textarea{ width:100%; padding:10px; margin:5px 0; border-radius:8px; border:none; font-size:14px; }
-button{ width:100%; padding:12px; margin-top:10px; border:none; border-radius:10px; font-size:16px; font-weight:bold; background:#28a745; color:white; }
-button.secondary{ background:#007bff; }
-button.danger{ background:#dc3545; }
-.table{ margin-top:15px; background:white; color:black; border-radius:10px; padding:10px; overflow-x:auto; }
-table{ width:100%; border-collapse:collapse; }
-th, td{ padding:6px; border-bottom:1px solid #ccc; font-size:13px; }
-.total{ margin-top:15px; font-size:18px; font-weight:bold; text-align:right; }
-.plan-activacion{ margin-bottom:20px; padding:10px; background:#fff; color:#000; border-radius:8px; }
+body{font-family:Arial,sans-serif;margin:0;background:linear-gradient(135deg,#1e3c59,#2a4a6f,#3b5c8a);color:#fff;}
+header{text-align:center;padding:25px 10px;background:#0a1f2e;position:relative;}
+header h1{margin:0;font-size:26px;}
+header img{width:60px;height:60px;position:absolute;top:10px;left:20px;animation:girar 5s linear infinite;}
+@keyframes girar{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.container{padding:20px;max-width:800px;margin:auto;}
+label{display:block;margin-top:12px;font-weight:bold;}
+input, select, textarea{width:100%;padding:10px;margin-top:5px;border-radius:8px;border:none;font-size:14px;box-sizing:border-box;}
+button{width:100%;padding:12px;margin-top:12px;border:none;border-radius:10px;font-size:16px;font-weight:bold;background:#28a745;color:white;cursor:pointer;transition:background 0.3s;}
+button:hover{background:#1e8c3f;}
+button.secondary{background:#007bff;}button.secondary:hover{background:#0056b3;}
+button.danger{background:#dc3545;}button.danger:hover{background:#a71d2a;}
+.table{margin-top:15px;background:white;color:black;border-radius:10px;padding:10px;overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th, td{padding:8px;border-bottom:1px solid #ccc;font-size:14px;text-align:center;}
+.total{margin-top:15px;font-size:18px;font-weight:bold;text-align:right;}
+hr{margin:25px 0;border:none;border-top:1px solid #ccc;}
 </style>
-
 </head>
 <body>
-
 <header>
-  <img src="logoisabsoft.png" class="logo-animada">
-  <div>
-    <h1>AgroSoft | Campo</h1>
-    <small>IsabSoft Soluciones Oportunas</small>
-  </div>
+<img src="logoisabsoft.png" alt="Logo AgroSoft">
+<h1>AgroSoft | Campo</h1>
+<small>IsabSoft Soluciones Oportunas</small>
 </header>
 
 <div class="container">
 
-<div class="plan-activacion">
 <h3>Activación de Plan</h3>
-<select id="seleccionarPlan">
-<option value="ninguno">-- Seleccione Plan --</option>
-<option value="estandar">Plan Estándar</option>
-<option value="premium">Plan Premium</option>
-</select>
+<label>Código de Activación</label>
+<input type="text" id="codigoPlan" placeholder="Ingrese código de licencia">
 <button onclick="activarPlan()">Activar Plan</button>
 <p>Plan activo: <span id="planActivo">Ninguno</span></p>
-</div>
+<hr>
 
 <h3>Datos de la Compra</h3>
-<label>Nº Compra</label>
-<input type="text" id="numeroCompra" readonly>
-<label>Fecha</label>
-<input type="date" id="fecha">
-<label>Proveedor</label>
-<input type="text" id="proveedor">
-<label>CI / RUC</label>
-<input type="text" id="ci">
-<label>Documento</label>
-<input type="text" id="documento">
+<label>Nº Compra</label><input type="text" id="numeroCompra" readonly>
+<label>Fecha</label><input type="date" id="fecha">
+<label>Proveedor</label><input type="text" id="proveedor">
+<label>CI / RUC</label><input type="text" id="ci">
+<label>Documento</label><input type="text" id="documento">
 
 <hr>
 
 <h3>Detalle de Animales</h3>
-<input type="text" id="caravana" placeholder="Nº Caravana">
-<input type="number" id="peso" placeholder="Peso Vivo (kg)">
-<input type="number" id="precioKg" placeholder="Precio por Kg (Gs.)">
-<input type="number" id="precioAnimal" placeholder="Precio Cerrado (Gs.)">
+<label>Nº Caravana</label><input type="text" id="caravana" placeholder="Nº Caravana">
+<label>Peso Vivo (kg)</label><input type="number" id="peso" placeholder="Peso Vivo (kg)">
+<label>Precio por Kg (Gs.)</label><input type="number" id="precioKg" placeholder="Precio por Kg (Gs.)">
+<label>Precio Cerrado (Gs.)</label><input type="number" id="precioAnimal" placeholder="Precio Cerrado (Gs.)">
 <button onclick="agregarAnimal()">Agregar Animal</button>
-
 <div class="table">
 <table id="tablaAnimales">
-<thead>
-<tr>
-<th>Caravana</th>
-<th>Peso</th>
-<th>Precio Kg</th>
-<th>Precio Cerrado</th>
-<th>Total Gs.</th>
-<th>X</th>
-</tr>
-</thead>
+<thead><tr><th>Caravana</th><th>Peso</th><th>Precio Kg</th><th>Precio Cerrado</th><th>Total Gs.</th><th>X</th></tr></thead>
 <tbody></tbody>
 </table>
 </div>
-
 <div class="total">
 Total Animales: ₲ <span id="totalAnimales">0</span><br>
 Precio real de costo por animal: ₲ <span id="precioReal">0</span>
@@ -109,8 +71,7 @@ Precio real de costo por animal: ₲ <span id="precioReal">0</span>
 <hr>
 
 <h3>Gastos de la Operación</h3>
-<label>Fecha</label>
-<input type="date" id="fechaGasto">
+<label>Fecha</label><input type="date" id="fechaGasto">
 <label>Tipo de Gasto</label>
 <select id="tipoGastoCompra">
 <option value="flete">Flete</option>
@@ -118,28 +79,16 @@ Precio real de costo por animal: ₲ <span id="precioReal">0</span>
 <option value="colcat">Pago a COLCAT</option>
 <option value="varios">Varios</option>
 </select>
-<label>Cantidad</label>
-<input type="number" id="cantidadGastoCompra" placeholder="Cantidad">
-<label>Importe Unitario</label>
-<input type="number" id="importeUnitarioGastoCompra" placeholder="Importe Unitario">
-<label>Observación</label>
-<textarea id="obsGastoCompra" placeholder="Observación"></textarea>
+<label>Cantidad</label><input type="number" id="cantidadGastoCompra" placeholder="Cantidad">
+<label>Importe Unitario</label><input type="number" id="importeUnitarioGastoCompra" placeholder="Importe Unitario">
+<label>Observación</label><textarea id="obsGastoCompra" placeholder="Observación"></textarea>
 <button onclick="agregarGastoCompra()">Agregar Gasto</button>
-
 <div class="table">
 <table id="tablaGastosCompra">
-<thead>
-<tr>
-<th>Fecha</th>
-<th>Tipo</th>
-<th>Total</th>
-<th>X</th>
-</tr>
-</thead>
+<thead><tr><th>Fecha</th><th>Tipo</th><th>Total</th><th>X</th></tr></thead>
 <tbody></tbody>
 </table>
 </div>
-
 <div class="total">
 Total Gastos: ₲ <span id="totalGastosCompra">0</span>
 </div>
@@ -147,66 +96,11 @@ Total Gastos: ₲ <span id="totalGastosCompra">0</span>
 <hr>
 <button onclick="exportarCompraYGastosCSV()">Exportar Compra + Gastos CSV</button>
 
+<script src="app.js"></script>
 <script>
-// --- Sistema de prueba 30 días ---
-(function(){
-  const hoy = new Date();
-  const fechaInicio = localStorage.getItem("fechaInicio");
-  if(!fechaInicio){
-    localStorage.setItem("fechaInicio", hoy.toISOString());
-  } else {
-    const inicio = new Date(fechaInicio);
-    const diffDias = Math.floor((hoy - inicio)/(1000*60*60*24));
-    if(diffDias>30){
-      alert("El período de funcionalidad ha finalizado, necesita mantenimiento.");
-      document.body.innerHTML="<h2 style='text-align:center;margin-top:50px;color:red;'>Período de funcionalidad finalizado</h2>";
-      throw new Error("Fin del período de funcionalidad operativa");
-    }
-  }
-})();
-
-// --- Activación de Plan ---
-let planActivo = localStorage.getItem("planActivo") || "ninguno";
-document.getElementById("planActivo").innerText = planActivo;
-
-function activarPlan(){
-  let seleccionado = document.getElementById("seleccionarPlan").value;
-  if(seleccionado==="ninguno"){ alert("Seleccione un plan"); return; }
-  planActivo = seleccionado;
-  localStorage.setItem("planActivo", planActivo);
-  document.getElementById("planActivo").innerText = planActivo;
-  alert("Plan " + planActivo + " activado correctamente");
-}
-
-// --- Contador de compras ---
-let contadorCompra = localStorage.getItem("contadorCompra") || 1;
-function actualizarNumeroCompra(){ document.getElementById("numeroCompra").value = "COMP-" + String(contadorCompra).padStart(4,'0'); }
-actualizarNumeroCompra();
-document.getElementById("fecha").valueAsDate = new Date();
-
-// --- Variables ---
-let animales=[], totalAnimales=0, gastosCompra=[], totalGastosCompra=0;
-
-// --- Funciones Animales ---
-function agregarAnimal(){ /* Igual que tu código anterior */ }
-function actualizarTablaAnimales(){ /* Igual que tu código anterior */ }
-function eliminarAnimal(i){ /* Igual que tu código anterior */ }
-function limpiarCamposAnimal(){ /* Igual que tu código anterior */ }
-
-// --- Funciones Gastos ---
-function agregarGastoCompra(){ /* Igual que tu código anterior */ }
-function actualizarTablaGastosCompra(){ /* Igual que tu código anterior */ }
-function eliminarGastoCompra(i){ /* Igual que tu código anterior */ }
-function limpiarCamposGastoCompra(){ /* Igual que tu código anterior */ }
-function actualizarPrecioReal(){ /* Igual que tu código anterior */ }
-function exportarCompraYGastosCSV(){ /* Igual que tu código anterior */ }
-
-// --- Service Worker ---
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js')
-  .then(()=>console.log("App lista para usar offline"));
+navigator.serviceWorker.register('sw.js').then(()=>console.log("App lista para offline"));
 }
 </script>
-
 </body>
 </html>
