@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,18 +6,8 @@
 <title>AgroSoft | Campo</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#28a745">
-<style>
-/* CSS simplificado: gradiente, tablas, botones, inputs */
-body{font-family:Arial,sans-serif;margin:0;color:#fff;background:#203a43;}
-header{text-align:center;padding:20px;background:#0a1f2e;}
-.container{padding:15px;}
-input, select, textarea{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none;font-size:14px;}
-button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:10px;font-size:16px;font-weight:bold;background:#28a745;color:white;}
-.table{margin-top:15px;background:white;color:black;border-radius:10px;padding:10px;overflow-x:auto;}
-table{width:100%;border-collapse:collapse;}
-th, td{padding:6px;border-bottom:1px solid #ccc;font-size:13px;}
-.total{margin-top:15px;font-size:18px;font-weight:bold;text-align:right;}
-</style>
+<link rel="stylesheet" href="style.css"> <!-- si quieres separar CSS -->
+
 </head>
 <body>
 
@@ -28,27 +17,100 @@ th, td{padding:6px;border-bottom:1px solid #ccc;font-size:13px;}
 </header>
 
 <div class="container">
-<!-- Formulario y tablas de compra (igual que tu código anterior) -->
-<!-- Incluye campos: número de compra, proveedor, CI/RUC, documento -->
-<!-- Detalle de animales y gastos -->
-<!-- Botón historial (Premium/PRO) -->
-<div id="btnHistorial" style="display:none">
-<button onclick="verHistorial()">Historial de Compras</button>
+<h3>Activación de Plan</h3>
+<select id="planSelect">
+<option value="">-- Seleccione Plan --</option>
+<option value="estandar">Plan Estándar</option>
+<option value="premium">Plan Premium</option>
+</select>
+<button onclick="activarPlanSeleccionado()">Activar Plan</button>
+<p>Plan activo: <span id="planActivo">Ninguno</span></p>
+<hr>
+
+<h3>Datos de la Compra</h3>
+<label>Nº Compra</label>
+<input type="text" id="numeroCompra" readonly>
+<label>Fecha</label>
+<input type="date" id="fecha">
+<label>Proveedor</label>
+<input type="text" id="proveedor">
+<label>CI / RUC</label>
+<input type="text" id="ci">
+<label>Documento</label>
+<input type="text" id="documento">
+
+<hr>
+<h3>Detalle de Animales</h3>
+<input type="text" id="caravana" placeholder="Nº Caravana">
+<input type="number" id="peso" placeholder="Peso Vivo (kg)">
+<input type="number" id="precioKg" placeholder="Precio por Kg (Gs.)">
+<input type="number" id="precioAnimal" placeholder="Precio Cerrado (Gs.)">
+<button onclick="agregarAnimal()">Agregar Animal</button>
+
+<div class="table">
+<table id="tablaAnimales">
+<thead>
+<tr>
+<th>Caravana</th>
+<th>Peso</th>
+<th>Precio Kg</th>
+<th>Precio Cerrado</th>
+<th>Total Gs.</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
 </div>
-<input type="text" id="clavePlan" placeholder="Ingrese clave de plan">
-<button onclick="activarPlan(document.getElementById('clavePlan').value)">Activar Plan</button>
+
+<div class="total">
+Total Animales: ₲ <span id="totalAnimales">0</span><br>
+Precio real de costo por animal: ₲ <span id="precioReal">0</span>
+</div>
+
+<hr>
+<h3>Gastos de la Operación</h3>
+<label>Fecha</label>
+<input type="date" id="fechaGasto">
+<label>Tipo de Gasto</label>
+<select id="tipoGastoCompra">
+<option value="flete">Flete</option>
+<option value="comision">Pago de Comisión</option>
+<option value="colcat">Pago a COLCAT</option>
+<option value="varios">Varios</option>
+</select>
+<label>Cantidad</label>
+<input type="number" id="cantidadGastoCompra" placeholder="Cantidad">
+<label>Importe Unitario</label>
+<input type="number" id="importeUnitarioGastoCompra" placeholder="Importe Unitario">
+<label>Observación</label>
+<textarea id="obsGastoCompra" placeholder="Observación"></textarea>
+<button onclick="agregarGastoCompra()">Agregar Gasto</button>
+
+<div class="table">
+<table id="tablaGastosCompra">
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Tipo</th>
+<th>Total</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+
+<div class="total">
+Total Gastos: ₲ <span id="totalGastosCompra">0</span>
+</div>
+
 <hr>
 <button onclick="exportarCompraYGastosCSV()">Exportar Compra + Gastos CSV</button>
 </div>
 
-<script src="db.js"></script>
 <script src="licencia.js"></script>
-<script src="app.js"></script>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(()=>console.log("App lista para usar offline"));
-}
-</script>
+<script src="compra.js"></script>
+<script src="sw_register.js"></script>
 </body>
 </html>
