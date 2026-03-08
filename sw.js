@@ -1,5 +1,5 @@
-const CACHE_NAME = "agrosoft-campo-v2";
-const urlsToCache = ["./","index.html","manifest.json","logoisabsoft.png","licencia.js","compra.js"];
+const CACHE_NAME = "agrosoft-campo-v3";
+const urlsToCache = ["./","index.html","manifest.json","logoisabsoft.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(
