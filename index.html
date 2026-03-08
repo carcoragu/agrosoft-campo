@@ -5,10 +5,9 @@
 <meta name="theme-color" content="#28a745">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgroSoft | Compra de Animales</title>
+<title>AgroSoft | Campo</title>
 
 <style>
-/* ---------- Estilos generales ---------- */
 body{
   font-family: Arial, sans-serif;
   margin:0;
@@ -25,76 +24,20 @@ header{
   align-items:center;
   justify-content:center;
 }
-header h1{
-  margin:0;
-  font-size:22px;
-}
-header small{
-  display:block;
-  font-size:12px;
-  color:#ccc;
-}
-.logo-animada {
-  width: 80px;
-  margin-right: 15px;
-  animation: girar 5s linear infinite;
-}
-@keyframes girar {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(180deg); }
-  100% { transform: rotate(360deg); }
-}
-.container{
-  padding:15px;
-}
-input, select, textarea{
-  width:100%;
-  padding:10px;
-  margin:5px 0;
-  border-radius:8px;
-  border:none;
-  font-size:14px;
-}
-button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  font-size:16px;
-  font-weight:bold;
-  background:#28a745;
-  color:white;
-}
-button.secondary{
-  background:#007bff;
-}
-button.danger{
-  background:#dc3545;
-}
-.table{
-  margin-top:15px;
-  background:white;
-  color:black;
-  border-radius:10px;
-  padding:10px;
-  overflow-x:auto;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-th, td{
-  padding:6px;
-  border-bottom:1px solid #ccc;
-  font-size:13px;
-}
-.total{
-  margin-top:15px;
-  font-size:18px;
-  font-weight:bold;
-  text-align:right;
-}
+header h1{ margin:0; font-size:22px; }
+header small{ display:block; font-size:12px; color:#ccc; }
+.logo-animada { width:80px; margin-right:15px; animation:girar 5s linear infinite; }
+@keyframes girar { 0% {transform:rotate(0deg);} 50% {transform:rotate(180deg);} 100% {transform:rotate(360deg);} }
+.container{ padding:15px; }
+input, select, textarea{ width:100%; padding:10px; margin:5px 0; border-radius:8px; border:none; font-size:14px; }
+button{ width:100%; padding:12px; margin-top:10px; border:none; border-radius:10px; font-size:16px; font-weight:bold; background:#28a745; color:white; }
+button.secondary{ background:#007bff; }
+button.danger{ background:#dc3545; }
+.table{ margin-top:15px; background:white; color:black; border-radius:10px; padding:10px; overflow-x:auto; }
+table{ width:100%; border-collapse:collapse; }
+th, td{ padding:6px; border-bottom:1px solid #ccc; font-size:13px; }
+.total{ margin-top:15px; font-size:18px; font-weight:bold; text-align:right; }
+.plan-activacion{ margin-bottom:20px; padding:10px; background:#fff; color:#000; border-radius:8px; }
 </style>
 
 </head>
@@ -109,6 +52,17 @@ th, td{
 </header>
 
 <div class="container">
+
+<div class="plan-activacion">
+<h3>Activación de Plan</h3>
+<select id="seleccionarPlan">
+<option value="ninguno">-- Seleccione Plan --</option>
+<option value="estandar">Plan Estándar</option>
+<option value="premium">Plan Premium</option>
+</select>
+<button onclick="activarPlan()">Activar Plan</button>
+<p>Plan activo: <span id="planActivo">Ninguno</span></p>
+</div>
 
 <h3>Datos de la Compra</h3>
 <label>Nº Compra</label>
@@ -196,54 +150,61 @@ Total Gastos: ₲ <span id="totalGastosCompra">0</span>
 <script>
 // --- Sistema de prueba 30 días ---
 (function(){
-    const hoy = new Date();
-    const fechaInicio = localStorage.getItem("fechaInicio");
-    if(!fechaInicio){
-        localStorage.setItem("fechaInicio", hoy.toISOString());
-    } else {
-        const inicio = new Date(fechaInicio);
-        const diffDias = Math.floor((hoy - inicio) / (1000*60*60*24));
-        if(diffDias > 31){
-            alert("El período de funcionalidad ha finalizado, necesita mantenimiento.");
-            document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;color:red;'>Período de funcionalidad finalizado</h2>";
-            throw new Error("Fin del período de funcionalidad operativa");
-        }
+  const hoy = new Date();
+  const fechaInicio = localStorage.getItem("fechaInicio");
+  if(!fechaInicio){
+    localStorage.setItem("fechaInicio", hoy.toISOString());
+  } else {
+    const inicio = new Date(fechaInicio);
+    const diffDias = Math.floor((hoy - inicio)/(1000*60*60*24));
+    if(diffDias>30){
+      alert("El período de funcionalidad ha finalizado, necesita mantenimiento.");
+      document.body.innerHTML="<h2 style='text-align:center;margin-top:50px;color:red;'>Período de funcionalidad finalizado</h2>";
+      throw new Error("Fin del período de funcionalidad operativa");
     }
+  }
 })();
+
+// --- Activación de Plan ---
+let planActivo = localStorage.getItem("planActivo") || "ninguno";
+document.getElementById("planActivo").innerText = planActivo;
+
+function activarPlan(){
+  let seleccionado = document.getElementById("seleccionarPlan").value;
+  if(seleccionado==="ninguno"){ alert("Seleccione un plan"); return; }
+  planActivo = seleccionado;
+  localStorage.setItem("planActivo", planActivo);
+  document.getElementById("planActivo").innerText = planActivo;
+  alert("Plan " + planActivo + " activado correctamente");
+}
 
 // --- Contador de compras ---
 let contadorCompra = localStorage.getItem("contadorCompra") || 1;
-function actualizarNumeroCompra(){
-    document.getElementById("numeroCompra").value = "COMP-" + String(contadorCompra).padStart(4,'0');
-}
+function actualizarNumeroCompra(){ document.getElementById("numeroCompra").value = "COMP-" + String(contadorCompra).padStart(4,'0'); }
 actualizarNumeroCompra();
 document.getElementById("fecha").valueAsDate = new Date();
 
-// --- Animales ---
-let animales = [];
-let totalAnimales = 0;
-let gastosCompra = [];
-let totalGastosCompra = 0;
+// --- Variables ---
+let animales=[], totalAnimales=0, gastosCompra=[], totalGastosCompra=0;
 
-function agregarAnimal(){ /* código igual que antes */ }
-function actualizarTablaAnimales(){ /* código igual que antes */ }
-function eliminarAnimal(i){ /* código igual que antes */ }
-function limpiarCamposAnimal(){ /* código igual que antes */ }
+// --- Funciones Animales ---
+function agregarAnimal(){ /* Igual que tu código anterior */ }
+function actualizarTablaAnimales(){ /* Igual que tu código anterior */ }
+function eliminarAnimal(i){ /* Igual que tu código anterior */ }
+function limpiarCamposAnimal(){ /* Igual que tu código anterior */ }
 
-function agregarGastoCompra(){ /* código igual que antes */ }
-function actualizarTablaGastosCompra(){ /* código igual que antes */ }
-function eliminarGastoCompra(i){ /* código igual que antes */ }
-function limpiarCamposGastoCompra(){ /* código igual que antes */ }
-function actualizarPrecioReal(){ /* código igual que antes */ }
+// --- Funciones Gastos ---
+function agregarGastoCompra(){ /* Igual que tu código anterior */ }
+function actualizarTablaGastosCompra(){ /* Igual que tu código anterior */ }
+function eliminarGastoCompra(i){ /* Igual que tu código anterior */ }
+function limpiarCamposGastoCompra(){ /* Igual que tu código anterior */ }
+function actualizarPrecioReal(){ /* Igual que tu código anterior */ }
+function exportarCompraYGastosCSV(){ /* Igual que tu código anterior */ }
 
-function exportarCompraYGastosCSV(){ /* código igual que antes */ }
-
-// --- Registrar Service Worker para modo offline ---
-if ('serviceWorker' in navigator) {
+// --- Service Worker ---
+if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js')
-    .then(function() {
-      console.log("App lista para usar offline");
-    });
+  .then(()=>console.log("App lista para usar offline"));
 }
 </script>
 
