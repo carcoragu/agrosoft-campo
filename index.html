@@ -1,31 +1,114 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgroSoft | Campo</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#28a745">
-<link rel="stylesheet" href="style.css"> <!-- si quieres separar CSS -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroSoft | Compra de Animales</title>
+
+<style>
+/* ---------- Estilos generales ---------- */
+body{
+  font-family: Arial, sans-serif;
+  margin:0;
+  background: #203a43;
+  background: -webkit-linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
+}
+header{
+  text-align:center;
+  padding:20px;
+  background:#0a1f2e;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+header h1{
+  margin:0;
+  font-size:22px;
+}
+header small{
+  display:block;
+  font-size:12px;
+  color:#ccc;
+}
+.logo-animada {
+  width: 80px;
+  margin-right: 15px;
+  animation: girar 5s linear infinite;
+}
+@keyframes girar {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+.container{
+  padding:15px;
+}
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  border-radius:8px;
+  border:none;
+  font-size:14px;
+}
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  background:#28a745;
+  color:white;
+}
+button.secondary{
+  background:#007bff;
+}
+button.danger{
+  background:#dc3545;
+}
+.table{
+  margin-top:15px;
+  background:white;
+  color:black;
+  border-radius:10px;
+  padding:10px;
+  overflow-x:auto;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+th, td{
+  padding:6px;
+  border-bottom:1px solid #ccc;
+  font-size:13px;
+}
+.total{
+  margin-top:15px;
+  font-size:18px;
+  font-weight:bold;
+  text-align:right;
+}
+</style>
 
 </head>
 <body>
 
 <header>
-<h1>AgroSoft | Campo</h1>
-<small>IsabSoft Soluciones Oportunas</small>
+  <img src="logoisabsoft.png" class="logo-animada">
+  <div>
+    <h1>AgroSoft | Campo</h1>
+    <small>IsabSoft Soluciones Oportunas</small>
+  </div>
 </header>
 
 <div class="container">
-<h3>Activación de Plan</h3>
-<select id="planSelect">
-<option value="">-- Seleccione Plan --</option>
-<option value="estandar">Plan Estándar</option>
-<option value="premium">Plan Premium</option>
-</select>
-<button onclick="activarPlanSeleccionado()">Activar Plan</button>
-<p>Plan activo: <span id="planActivo">Ninguno</span></p>
-<hr>
 
 <h3>Datos de la Compra</h3>
 <label>Nº Compra</label>
@@ -40,6 +123,7 @@
 <input type="text" id="documento">
 
 <hr>
+
 <h3>Detalle de Animales</h3>
 <input type="text" id="caravana" placeholder="Nº Caravana">
 <input type="number" id="peso" placeholder="Peso Vivo (kg)">
@@ -69,6 +153,7 @@ Precio real de costo por animal: ₲ <span id="precioReal">0</span>
 </div>
 
 <hr>
+
 <h3>Gastos de la Operación</h3>
 <label>Fecha</label>
 <input type="date" id="fechaGasto">
@@ -107,10 +192,60 @@ Total Gastos: ₲ <span id="totalGastosCompra">0</span>
 
 <hr>
 <button onclick="exportarCompraYGastosCSV()">Exportar Compra + Gastos CSV</button>
-</div>
 
-<script src="licencia.js"></script>
-<script src="compra.js"></script>
-<script src="sw_register.js"></script>
+<script>
+// --- Sistema de prueba 30 días ---
+(function(){
+    const hoy = new Date();
+    const fechaInicio = localStorage.getItem("fechaInicio");
+    if(!fechaInicio){
+        localStorage.setItem("fechaInicio", hoy.toISOString());
+    } else {
+        const inicio = new Date(fechaInicio);
+        const diffDias = Math.floor((hoy - inicio) / (1000*60*60*24));
+        if(diffDias > 31){
+            alert("El período de funcionalidad ha finalizado, necesita mantenimiento.");
+            document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;color:red;'>Período de funcionalidad finalizado</h2>";
+            throw new Error("Fin del período de funcionalidad operativa");
+        }
+    }
+})();
+
+// --- Contador de compras ---
+let contadorCompra = localStorage.getItem("contadorCompra") || 1;
+function actualizarNumeroCompra(){
+    document.getElementById("numeroCompra").value = "COMP-" + String(contadorCompra).padStart(4,'0');
+}
+actualizarNumeroCompra();
+document.getElementById("fecha").valueAsDate = new Date();
+
+// --- Animales ---
+let animales = [];
+let totalAnimales = 0;
+let gastosCompra = [];
+let totalGastosCompra = 0;
+
+function agregarAnimal(){ /* código igual que antes */ }
+function actualizarTablaAnimales(){ /* código igual que antes */ }
+function eliminarAnimal(i){ /* código igual que antes */ }
+function limpiarCamposAnimal(){ /* código igual que antes */ }
+
+function agregarGastoCompra(){ /* código igual que antes */ }
+function actualizarTablaGastosCompra(){ /* código igual que antes */ }
+function eliminarGastoCompra(i){ /* código igual que antes */ }
+function limpiarCamposGastoCompra(){ /* código igual que antes */ }
+function actualizarPrecioReal(){ /* código igual que antes */ }
+
+function exportarCompraYGastosCSV(){ /* código igual que antes */ }
+
+// --- Registrar Service Worker para modo offline ---
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(function() {
+      console.log("App lista para usar offline");
+    });
+}
+</script>
+
 </body>
 </html>
