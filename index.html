@@ -14,13 +14,13 @@ body {
     color: #fff;
 }
 
-/* Encabezado corregido y responsive */
+/* Encabezado profesional con ambos logos y título centrado */
 .header-sistema {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
     background: #0a1f2e;
+    padding: 10px 20px;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -28,18 +28,17 @@ body {
 .logo-empresa img {
     width: 80px;
     height: auto;
+    animation: girar 5s linear infinite;
 }
 
-.logo-desarrollador img {
-    width: 70px;
-    height: auto;
-    opacity: 0.8;
+@keyframes girar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .titulo-sistema {
-    flex: 1 1 auto;
+    flex: 1 1 200px;
     text-align: center;
-    min-width: 200px;
 }
 
 .titulo-sistema h1 {
@@ -55,7 +54,13 @@ body {
     margin-top: 3px;
 }
 
-/* Estilos generales */
+.logo-desarrollador img {
+    width: 70px;
+    height: auto;
+    opacity: 0.8;
+}
+
+/* Contenedor y estilos generales */
 .container {
     padding: 20px;
     max-width: 800px;
@@ -135,7 +140,7 @@ hr {
 </head>
 <body>
 
-<!-- Encabezado -->
+<!-- Encabezado con ambos logos y título centrado -->
 <header class="header-sistema">
     <div class="logo-empresa">
         <img src="logo_fainver.png" alt="FAINVER EAS">
@@ -238,7 +243,6 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').then(() => console.log("App lista para offline"));
 }
 
-// Funciones básicas de ejemplo
 function activarPlan() {
     const codigo = document.getElementById('codigoPlan').value;
     document.getElementById('planActivo').textContent = codigo ? "Plan Activado" : "Ninguno";
