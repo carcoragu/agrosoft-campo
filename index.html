@@ -7,140 +7,304 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#28a745">
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:linear-gradient(135deg,#1e3c59,#2a4a6f,#3b5c8a);color:#fff;}
-header{text-align:center;padding:25px 10px;background:#0a1f2e;position:relative;}
-header h1{margin:0;font-size:26px;}
-header img{width:60px;height:60px;position:absolute;top:10px;left:20px;animation:girar 5s linear infinite;}
-@keyframes girar{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-.container{padding:20px;max-width:800px;margin:auto;}
-label{display:block;margin-top:12px;font-weight:bold;}
-input, select, textarea{width:100%;padding:10px;margin-top:5px;border-radius:8px;border:none;font-size:14px;box-sizing:border-box;}
-button{width:100%;padding:12px;margin-top:12px;border:none;border-radius:10px;font-size:16px;font-weight:bold;background:#28a745;color:white;cursor:pointer;transition:background 0.3s;}
-button:hover{background:#1e8c3f;}
-button.secondary{background:#007bff;}button.secondary:hover{background:#0056b3;}
-button.danger{background:#dc3545;}button.danger:hover{background:#a71d2a;}
-.table{margin-top:15px;background:white;color:black;border-radius:10px;padding:10px;overflow-x:auto;}
-table{width:100%;border-collapse:collapse;}
-th, td{padding:8px;border-bottom:1px solid #ccc;font-size:14px;text-align:center;}
-.total{margin-top:15px;font-size:18px;font-weight:bold;text-align:right;}
-hr{margin:25px 0;border:none;border-top:1px solid #ccc;}
-.header-sistema{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:15px;
-background:#0a1f2e;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg,#1e3c59,#2a4a6f,#3b5c8a);
+    color: #fff;
 }
 
-.logo-empresa img{
-width:90px;
+/* Encabezado corregido y responsive */
+.header-sistema {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #0a1f2e;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.logo-desarrollador img{
-width:70px;
-opacity:0.8;
+.logo-empresa img {
+    width: 80px;
+    height: auto;
 }
 
-.titulo-sistema{
-text-align:center;
-flex-grow:1;
+.logo-desarrollador img {
+    width: 70px;
+    height: auto;
+    opacity: 0.8;
 }
 
-.titulo-sistema h1{
-margin:0;
-font-size:26px;
-color:#fff;
+.titulo-sistema {
+    flex: 1 1 auto;
+    text-align: center;
+    min-width: 200px;
 }
 
-.titulo-sistema small{
-color:#b5e7c5;
-font-size:14px;
-}  
+.titulo-sistema h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #fff;
+}
 
+.titulo-sistema small {
+    display: block;
+    font-size: 13px;
+    color: #b5e7c5;
+    margin-top: 3px;
+}
+
+/* Estilos generales */
+.container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #28a745;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover { background: #1e8c3f; }
+button.secondary { background: #007bff; }
+button.secondary:hover { background: #0056b3; }
+button.danger { background: #dc3545; }
+button.danger:hover { background: #a71d2a; }
+
+.table {
+    margin-top: 15px;
+    background: white;
+    color: black;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+    text-align: center;
+}
+
+.total {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+}
+
+hr {
+    margin: 25px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
 </style>
 </head>
 <body>
 
+<!-- Encabezado -->
 <header class="header-sistema">
-<div class="logo-empresa">
-<img src="logo_fainver.png" alt="FAINVER EAS">
-</div>
-<div class="titulo-sistema">
-<h1>AgroSoft Campo</h1>
-<small>Control de Compras y Costos en Ganadería</small>
-</div>
-<div class="logo-desarrollador">
-<img src="logoisabsoft.png" alt="IsabSoft">
-</div>
+    <div class="logo-empresa">
+        <img src="logo_fainver.png" alt="FAINVER EAS">
+    </div>
+    <div class="titulo-sistema">
+        <h1>AgroSoft Campo</h1>
+        <small>Control de Compras y Costos en Ganadería</small>
+    </div>
+    <div class="logo-desarrollador">
+        <img src="logoisabsoft.png" alt="IsabSoft">
+    </div>
 </header>
+
 <div class="container">
 
-<h3>Activación de Plan</h3>
-<label>Código de Activación</label>
-<input type="text" id="codigoPlan" placeholder="Ingrese código de licencia">
-<button onclick="activarPlan()">Activar Plan</button>
-<p>Plan activo: <span id="planActivo">Ninguno</span></p>
-<hr>
+    <h3>Activación de Plan</h3>
+    <label>Código de Activación</label>
+    <input type="text" id="codigoPlan" placeholder="Ingrese código de licencia">
+    <button onclick="activarPlan()">Activar Plan</button>
+    <p>Plan activo: <span id="planActivo">Ninguno</span></p>
+    <hr>
 
-<h3>Datos de la Compra</h3>
-<label>Nº Compra</label><input type="text" id="numeroCompra" readonly>
-<label>Fecha</label><input type="date" id="fecha">
-<label>Proveedor</label><input type="text" id="proveedor">
-<label>CI / RUC</label><input type="text" id="ci">
-<label>Documento</label><input type="text" id="documento">
+    <h3>Datos de la Compra</h3>
+    <label>Nº Compra</label><input type="text" id="numeroCompra" readonly>
+    <label>Fecha</label><input type="date" id="fecha">
+    <label>Proveedor</label><input type="text" id="proveedor">
+    <label>CI / RUC</label><input type="text" id="ci">
+    <label>Documento</label><input type="text" id="documento">
+    <hr>
 
-<hr>
+    <h3>Detalle de Animales</h3>
+    <label>Nº Caravana</label><input type="text" id="caravana" placeholder="Nº Caravana">
+    <label>Peso Vivo (kg)</label><input type="number" id="peso" placeholder="Peso Vivo (kg)">
+    <label>Precio por Kg (Gs.)</label><input type="number" id="precioKg" placeholder="Precio por Kg (Gs.)">
+    <label>Precio Cerrado (Gs.)</label><input type="number" id="precioAnimal" placeholder="Precio Cerrado (Gs.)">
+    <button onclick="agregarAnimal()">Agregar Animal</button>
 
-<h3>Detalle de Animales</h3>
-<label>Nº Caravana</label><input type="text" id="caravana" placeholder="Nº Caravana">
-<label>Peso Vivo (kg)</label><input type="number" id="peso" placeholder="Peso Vivo (kg)">
-<label>Precio por Kg (Gs.)</label><input type="number" id="precioKg" placeholder="Precio por Kg (Gs.)">
-<label>Precio Cerrado (Gs.)</label><input type="number" id="precioAnimal" placeholder="Precio Cerrado (Gs.)">
-<button onclick="agregarAnimal()">Agregar Animal</button>
-<div class="table">
-<table id="tablaAnimales">
-<thead><tr><th>Caravana</th><th>Peso</th><th>Precio Kg</th><th>Precio Cerrado</th><th>Total Gs.</th><th>X</th></tr></thead>
-<tbody></tbody>
-</table>
+    <div class="table">
+        <table id="tablaAnimales">
+            <thead>
+                <tr>
+                    <th>Caravana</th>
+                    <th>Peso</th>
+                    <th>Precio Kg</th>
+                    <th>Precio Cerrado</th>
+                    <th>Total Gs.</th>
+                    <th>X</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="total">
+        Total Animales: ₲ <span id="totalAnimales">0</span><br>
+        Precio real de costo por animal: ₲ <span id="precioReal">0</span>
+    </div>
+    <hr>
+
+    <h3>Gastos de la Operación</h3>
+    <label>Fecha</label><input type="date" id="fechaGasto">
+    <label>Tipo de Gasto</label>
+    <select id="tipoGastoCompra">
+        <option value="flete">Flete</option>
+        <option value="comision">Pago de Comisión</option>
+        <option value="colcat">Pago a COLCAT</option>
+        <option value="varios">Varios</option>
+    </select>
+    <label>Cantidad</label><input type="number" id="cantidadGastoCompra" placeholder="Cantidad">
+    <label>Importe Unitario</label><input type="number" id="importeUnitarioGastoCompra" placeholder="Importe Unitario">
+    <label>Observación</label><textarea id="obsGastoCompra" placeholder="Observación"></textarea>
+    <button onclick="agregarGastoCompra()">Agregar Gasto</button>
+
+    <div class="table">
+        <table id="tablaGastosCompra">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Total</th>
+                    <th>X</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="total">
+        Total Gastos: ₲ <span id="totalGastosCompra">0</span>
+    </div>
+
+    <hr>
+    <button onclick="exportarCompraYGastosCSV()">Exportar Compra + Gastos CSV</button>
+
 </div>
-<div class="total">
-Total Animales: ₲ <span id="totalAnimales">0</span><br>
-Precio real de costo por animal: ₲ <span id="precioReal">0</span>
-</div>
-
-<hr>
-
-<h3>Gastos de la Operación</h3>
-<label>Fecha</label><input type="date" id="fechaGasto">
-<label>Tipo de Gasto</label>
-<select id="tipoGastoCompra">
-<option value="flete">Flete</option>
-<option value="comision">Pago de Comisión</option>
-<option value="colcat">Pago a COLCAT</option>
-<option value="varios">Varios</option>
-</select>
-<label>Cantidad</label><input type="number" id="cantidadGastoCompra" placeholder="Cantidad">
-<label>Importe Unitario</label><input type="number" id="importeUnitarioGastoCompra" placeholder="Importe Unitario">
-<label>Observación</label><textarea id="obsGastoCompra" placeholder="Observación"></textarea>
-<button onclick="agregarGastoCompra()">Agregar Gasto</button>
-<div class="table">
-<table id="tablaGastosCompra">
-<thead><tr><th>Fecha</th><th>Tipo</th><th>Total</th><th>X</th></tr></thead>
-<tbody></tbody>
-</table>
-</div>
-<div class="total">
-Total Gastos: ₲ <span id="totalGastosCompra">0</span>
-</div>
-
-<hr>
-<button onclick="exportarCompraYGastosCSV()">Exportar Compra + Gastos CSV</button>
 
 <script src="app.js"></script>
 <script>
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register('sw.js').then(()=>console.log("App lista para offline"));
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').then(() => console.log("App lista para offline"));
+}
+
+// Funciones básicas de ejemplo
+function activarPlan() {
+    const codigo = document.getElementById('codigoPlan').value;
+    document.getElementById('planActivo').textContent = codigo ? "Plan Activado" : "Ninguno";
+}
+
+function agregarAnimal() {
+    const caravana = document.getElementById('caravana').value;
+    const peso = parseFloat(document.getElementById('peso').value) || 0;
+    const precioKg = parseFloat(document.getElementById('precioKg').value) || 0;
+    const precioAnimal = parseFloat(document.getElementById('precioAnimal').value) || 0;
+    const total = precioAnimal || (peso * precioKg);
+
+    if (!caravana) return alert("Ingrese Nº de Caravana");
+
+    const tbody = document.getElementById('tablaAnimales').querySelector('tbody');
+    const row = tbody.insertRow();
+    row.innerHTML = `
+        <td>${caravana}</td>
+        <td>${peso}</td>
+        <td>${precioKg}</td>
+        <td>${precioAnimal}</td>
+        <td>${total}</td>
+        <td><button class="danger" onclick="this.closest('tr').remove(); actualizarTotales()">X</button></td>
+    `;
+    actualizarTotales();
+}
+
+function actualizarTotales() {
+    const rows = document.getElementById('tablaAnimales').querySelectorAll('tbody tr');
+    let total = 0;
+    rows.forEach(r => total += parseFloat(r.cells[4].textContent) || 0);
+    document.getElementById('totalAnimales').textContent = total;
+    document.getElementById('precioReal').textContent = rows.length ? (total / rows.length).toFixed(2) : 0;
+}
+
+function agregarGastoCompra() {
+    const fecha = document.getElementById('fechaGasto').value;
+    const tipo = document.getElementById('tipoGastoCompra').value;
+    const cantidad = parseFloat(document.getElementById('cantidadGastoCompra').value) || 0;
+    const importe = parseFloat(document.getElementById('importeUnitarioGastoCompra').value) || 0;
+    const total = cantidad * importe;
+
+    if (!fecha || !tipo) return alert("Ingrese fecha y tipo de gasto");
+
+    const tbody = document.getElementById('tablaGastosCompra').querySelector('tbody');
+    const row = tbody.insertRow();
+    row.innerHTML = `
+        <td>${fecha}</td>
+        <td>${tipo}</td>
+        <td>${total}</td>
+        <td><button class="danger" onclick="this.closest('tr').remove(); actualizarTotalGastos()">X</button></td>
+    `;
+    actualizarTotalGastos();
+}
+
+function actualizarTotalGastos() {
+    const rows = document.getElementById('tablaGastosCompra').querySelectorAll('tbody tr');
+    let total = 0;
+    rows.forEach(r => total += parseFloat(r.cells[2].textContent) || 0);
+    document.getElementById('totalGastosCompra').textContent = total;
+}
+
+function exportarCompraYGastosCSV() {
+    alert("Función de exportación CSV aún no implementada.");
 }
 </script>
+
 </body>
 </html>
