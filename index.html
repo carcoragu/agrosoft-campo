@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgroSoft | Campo</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#28a745">
 <style>
 body {
     font-family: Arial, sans-serif;
@@ -14,7 +12,7 @@ body {
     color: #fff;
 }
 
-/* Encabezado profesional con ambos logos y título centrado */
+/* Encabezado */
 .header-sistema {
     display: flex;
     align-items: center;
@@ -25,17 +23,27 @@ body {
     gap: 10px;
 }
 
+/* Logos */
 .logo-empresa img {
-    width: 80px;
+    width: 70px;
+    max-width: 20vw;
     height: auto;
     animation: girar 5s linear infinite;
 }
+.logo-desarrollador img {
+    width: 60px;
+    max-width: 20vw;
+    height: auto;
+    opacity: 0.8;
+}
 
+/* Animación logo */
 @keyframes girar {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
+/* Título centrado */
 .titulo-sistema {
     flex: 1 1 200px;
     text-align: center;
@@ -43,37 +51,31 @@ body {
 
 .titulo-sistema h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 22px;
     color: #fff;
 }
 
 .titulo-sistema small {
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     color: #b5e7c5;
-    margin-top: 3px;
+    margin-top: 2px;
 }
 
-.logo-desarrollador img {
-    width: 70px;
-    height: auto;
-    opacity: 0.8;
-}
-
-/* Contenedor y estilos generales */
+/* Contenedor principal */
 .container {
     padding: 20px;
     max-width: 800px;
     margin: auto;
 }
 
+/* Formularios */
 label {
     display: block;
     margin-top: 12px;
     font-weight: bold;
 }
-
-input, select, textarea {
+input, select, textarea, button {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -84,25 +86,16 @@ input, select, textarea {
 }
 
 button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 12px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: bold;
     background: #28a745;
     color: white;
+    font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
 }
-
 button:hover { background: #1e8c3f; }
-button.secondary { background: #007bff; }
-button.secondary:hover { background: #0056b3; }
 button.danger { background: #dc3545; }
 button.danger:hover { background: #a71d2a; }
 
+/* Tablas */
 .table {
     margin-top: 15px;
     background: white;
@@ -120,13 +113,11 @@ table {
 th, td {
     padding: 8px;
     border-bottom: 1px solid #ccc;
-    font-size: 14px;
     text-align: center;
 }
 
 .total {
     margin-top: 15px;
-    font-size: 18px;
     font-weight: bold;
     text-align: right;
 }
@@ -136,11 +127,22 @@ hr {
     border: none;
     border-top: 1px solid #ccc;
 }
+
+/* Responsive */
+@media (max-width: 480px) {
+    .header-sistema {
+        flex-direction: column;
+        text-align: center;
+    }
+    .logo-empresa, .logo-desarrollador {
+        margin: 5px 0;
+    }
+}
 </style>
 </head>
 <body>
 
-<!-- Encabezado con ambos logos y título centrado -->
+<!-- Encabezado -->
 <header class="header-sistema">
     <div class="logo-empresa">
         <img src="logo_fainver.png" alt="FAINVER EAS">
@@ -154,8 +156,8 @@ hr {
     </div>
 </header>
 
+<!-- Contenido principal -->
 <div class="container">
-
     <h3>Activación de Plan</h3>
     <label>Código de Activación</label>
     <input type="text" id="codigoPlan" placeholder="Ingrese código de licencia">
@@ -172,10 +174,10 @@ hr {
     <hr>
 
     <h3>Detalle de Animales</h3>
-    <label>Nº Caravana</label><input type="text" id="caravana" placeholder="Nº Caravana">
-    <label>Peso Vivo (kg)</label><input type="number" id="peso" placeholder="Peso Vivo (kg)">
-    <label>Precio por Kg (Gs.)</label><input type="number" id="precioKg" placeholder="Precio por Kg (Gs.)">
-    <label>Precio Cerrado (Gs.)</label><input type="number" id="precioAnimal" placeholder="Precio Cerrado (Gs.)">
+    <label>Nº Caravana</label><input type="text" id="caravana">
+    <label>Peso Vivo (kg)</label><input type="number" id="peso">
+    <label>Precio por Kg (Gs.)</label><input type="number" id="precioKg">
+    <label>Precio Cerrado (Gs.)</label><input type="number" id="precioAnimal">
     <button onclick="agregarAnimal()">Agregar Animal</button>
 
     <div class="table">
@@ -209,9 +211,9 @@ hr {
         <option value="colcat">Pago a COLCAT</option>
         <option value="varios">Varios</option>
     </select>
-    <label>Cantidad</label><input type="number" id="cantidadGastoCompra" placeholder="Cantidad">
-    <label>Importe Unitario</label><input type="number" id="importeUnitarioGastoCompra" placeholder="Importe Unitario">
-    <label>Observación</label><textarea id="obsGastoCompra" placeholder="Observación"></textarea>
+    <label>Cantidad</label><input type="number" id="cantidadGastoCompra">
+    <label>Importe Unitario</label><input type="number" id="importeUnitarioGastoCompra">
+    <label>Observación</label><textarea id="obsGastoCompra"></textarea>
     <button onclick="agregarGastoCompra()">Agregar Gasto</button>
 
     <div class="table">
@@ -231,18 +233,9 @@ hr {
     <div class="total">
         Total Gastos: ₲ <span id="totalGastosCompra">0</span>
     </div>
-
-    <hr>
-    <button onclick="exportarCompraYGastosCSV()">Exportar Compra + Gastos CSV</button>
-
 </div>
 
-<script src="app.js"></script>
 <script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').then(() => console.log("App lista para offline"));
-}
-
 function activarPlan() {
     const codigo = document.getElementById('codigoPlan').value;
     document.getElementById('planActivo').textContent = codigo ? "Plan Activado" : "Ninguno";
@@ -254,61 +247,40 @@ function agregarAnimal() {
     const precioKg = parseFloat(document.getElementById('precioKg').value) || 0;
     const precioAnimal = parseFloat(document.getElementById('precioAnimal').value) || 0;
     const total = precioAnimal || (peso * precioKg);
-
-    if (!caravana) return alert("Ingrese Nº de Caravana");
-
+    if(!caravana) return alert("Ingrese Nº de Caravana");
     const tbody = document.getElementById('tablaAnimales').querySelector('tbody');
     const row = tbody.insertRow();
-    row.innerHTML = `
-        <td>${caravana}</td>
-        <td>${peso}</td>
-        <td>${precioKg}</td>
-        <td>${precioAnimal}</td>
-        <td>${total}</td>
-        <td><button class="danger" onclick="this.closest('tr').remove(); actualizarTotales()">X</button></td>
-    `;
+    row.innerHTML = `<td>${caravana}</td><td>${peso}</td><td>${precioKg}</td><td>${precioAnimal}</td><td>${total}</td><td><button class="danger" onclick="this.closest('tr').remove(); actualizarTotales()">X</button></td>`;
     actualizarTotales();
 }
 
 function actualizarTotales() {
     const rows = document.getElementById('tablaAnimales').querySelectorAll('tbody tr');
     let total = 0;
-    rows.forEach(r => total += parseFloat(r.cells[4].textContent) || 0);
+    rows.forEach(r => total += parseFloat(r.cells[4].textContent)||0);
     document.getElementById('totalAnimales').textContent = total;
-    document.getElementById('precioReal').textContent = rows.length ? (total / rows.length).toFixed(2) : 0;
+    document.getElementById('precioReal').textContent = rows.length ? (total/rows.length).toFixed(2) : 0;
 }
 
 function agregarGastoCompra() {
     const fecha = document.getElementById('fechaGasto').value;
     const tipo = document.getElementById('tipoGastoCompra').value;
-    const cantidad = parseFloat(document.getElementById('cantidadGastoCompra').value) || 0;
-    const importe = parseFloat(document.getElementById('importeUnitarioGastoCompra').value) || 0;
-    const total = cantidad * importe;
-
-    if (!fecha || !tipo) return alert("Ingrese fecha y tipo de gasto");
-
+    const cantidad = parseFloat(document.getElementById('cantidadGastoCompra').value)||0;
+    const importe = parseFloat(document.getElementById('importeUnitarioGastoCompra').value)||0;
+    const total = cantidad*importe;
+    if(!fecha||!tipo) return alert("Ingrese fecha y tipo de gasto");
     const tbody = document.getElementById('tablaGastosCompra').querySelector('tbody');
     const row = tbody.insertRow();
-    row.innerHTML = `
-        <td>${fecha}</td>
-        <td>${tipo}</td>
-        <td>${total}</td>
-        <td><button class="danger" onclick="this.closest('tr').remove(); actualizarTotalGastos()">X</button></td>
-    `;
+    row.innerHTML = `<td>${fecha}</td><td>${tipo}</td><td>${total}</td><td><button class="danger" onclick="this.closest('tr').remove(); actualizarTotalGastos()">X</button></td>`;
     actualizarTotalGastos();
 }
 
 function actualizarTotalGastos() {
     const rows = document.getElementById('tablaGastosCompra').querySelectorAll('tbody tr');
     let total = 0;
-    rows.forEach(r => total += parseFloat(r.cells[2].textContent) || 0);
+    rows.forEach(r => total += parseFloat(r.cells[2].textContent)||0);
     document.getElementById('totalGastosCompra').textContent = total;
 }
-
-function exportarCompraYGastosCSV() {
-    alert("Función de exportación CSV aún no implementada.");
-}
 </script>
-
 </body>
 </html>
