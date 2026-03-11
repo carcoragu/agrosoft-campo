@@ -20,46 +20,43 @@ body {
     justify-content: space-between;
     padding: 10px 20px;
     background: #0a1f2e;
-    flex-wrap: wrap;
-    gap: 10px;
 }
 
+/* Logos */
 .logo-empresa img {
-    width: 70px;
-    max-width: 20vw;
+    width: 80px;
     height: auto;
     animation: girar 5s linear infinite;
 }
 
 .logo-desarrollador img {
-    width: 60px;
-    max-width: 20vw;
+    width: 70px;
     height: auto;
     opacity: 0.8;
-}
-
-.titulo-sistema {
-    flex: 1 1 200px;
-    text-align: center;
-}
-
-.titulo-sistema h1 {
-    margin: 0;
-    font-size: 22px;
-    color: #fff;
-}
-
-.titulo-sistema small {
-    display: block;
-    font-size: 12px;
-    color: #b5e7c5;
-    margin-top: 2px;
 }
 
 /* Animación logo */
 @keyframes girar {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Título centrado */
+.titulo-sistema {
+    flex: 1;
+    text-align: center;
+}
+
+.titulo-sistema h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #fff;
+}
+
+.titulo-sistema small {
+    display: block;
+    font-size: 13px;
+    color: #b5e7c5;
 }
 
 /* Contenedor principal */
@@ -129,15 +126,17 @@ hr {
     border-top: 1px solid #ccc;
 }
 
-/* Responsive */
+/* Responsive: fija el orden y tamaños de logos en móviles */
 @media (max-width: 480px) {
     .header-sistema {
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
-    .logo-empresa, .logo-desarrollador {
-        margin: 5px 0;
-    }
+    .logo-empresa { order: 1; }
+    .titulo-sistema { order: 2; flex: 1; text-align: center; }
+    .logo-desarrollador { order: 3; }
+    .logo-empresa img, .logo-desarrollador img { width: 60px; }
 }
 </style>
 </head>
