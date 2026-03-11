@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgroSoft | Campo</title>
 <style>
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -17,19 +18,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #0a1f2e;
     padding: 10px 20px;
+    background: #0a1f2e;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-/* Logos */
 .logo-empresa img {
     width: 70px;
     max-width: 20vw;
     height: auto;
     animation: girar 5s linear infinite;
 }
+
 .logo-desarrollador img {
     width: 60px;
     max-width: 20vw;
@@ -37,13 +38,6 @@ body {
     opacity: 0.8;
 }
 
-/* Animación logo */
-@keyframes girar {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Título centrado */
 .titulo-sistema {
     flex: 1 1 200px;
     text-align: center;
@@ -62,6 +56,12 @@ body {
     margin-top: 2px;
 }
 
+/* Animación logo */
+@keyframes girar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 /* Contenedor principal */
 .container {
     padding: 20px;
@@ -75,6 +75,7 @@ label {
     margin-top: 12px;
     font-weight: bold;
 }
+
 input, select, textarea, button {
     width: 100%;
     padding: 10px;
@@ -236,6 +237,7 @@ hr {
 </div>
 
 <script>
+// Funciones básicas
 function activarPlan() {
     const codigo = document.getElementById('codigoPlan').value;
     document.getElementById('planActivo').textContent = codigo ? "Plan Activado" : "Ninguno";
@@ -243,10 +245,10 @@ function activarPlan() {
 
 function agregarAnimal() {
     const caravana = document.getElementById('caravana').value;
-    const peso = parseFloat(document.getElementById('peso').value) || 0;
-    const precioKg = parseFloat(document.getElementById('precioKg').value) || 0;
-    const precioAnimal = parseFloat(document.getElementById('precioAnimal').value) || 0;
-    const total = precioAnimal || (peso * precioKg);
+    const peso = parseFloat(document.getElementById('peso').value)||0;
+    const precioKg = parseFloat(document.getElementById('precioKg').value)||0;
+    const precioAnimal = parseFloat(document.getElementById('precioAnimal').value)||0;
+    const total = precioAnimal || (peso*precioKg);
     if(!caravana) return alert("Ingrese Nº de Caravana");
     const tbody = document.getElementById('tablaAnimales').querySelector('tbody');
     const row = tbody.insertRow();
@@ -282,5 +284,6 @@ function actualizarTotalGastos() {
     document.getElementById('totalGastosCompra').textContent = total;
 }
 </script>
+
 </body>
 </html>
