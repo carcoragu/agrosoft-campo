@@ -25,6 +25,38 @@ th, td{padding:8px;border-bottom:1px solid #ccc;font-size:14px;text-align:center
 .total{margin-top:15px;font-size:18px;font-weight:bold;text-align:right;}
 hr{margin:25px 0;border:none;border-top:1px solid #ccc;}
 </style>
+.header-sistema{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:15px;
+background:#0a1f2e;
+}
+
+.logo-empresa img{
+width:90px;
+}
+
+.logo-desarrollador img{
+width:70px;
+opacity:0.8;
+}
+
+.titulo-sistema{
+text-align:center;
+flex-grow:1;
+}
+
+.titulo-sistema h1{
+margin:0;
+font-size:26px;
+color:#fff;
+}
+
+.titulo-sistema small{
+color:#b5e7c5;
+font-size:14px;
+}  
 </head>
 <body>
 
@@ -111,4 +143,5 @@ navigator.serviceWorker.register('sw.js').then(()=>console.log("App lista para o
 </script>
 </body>
 </html>
+
 
