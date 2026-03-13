@@ -5,137 +5,92 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgroSoft | Campo</title>
 <style>
-/* Estilos generales */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: linear-gradient(135deg,#1e3c59,#2a4a6f,#3b5c8a);
-    color: #fff;
+
+/* HEADER APP PROFESIONAL */
+
+.header-sistema{
+display:grid;
+grid-template-columns:auto 1fr auto;
+align-items:center;
+padding:12px 15px;
+background:rgba(10,31,46,0.95);
+backdrop-filter:blur(6px);
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
+border-bottom:1px solid rgba(255,255,255,0.08);
+gap:10px;
 }
 
-/* Encabezado usando Grid */
-.header-sistema {
-    display: grid;
-    grid-template-columns: auto 1fr auto; /* logo - título - logo */
-    align-items: center;
-    padding: 10px 20px;
-    background: #0a1f2e;
-    gap: 10px;
-}
+/* LOGOS */
 
 .logo-empresa img,
-.logo-desarrollador img {
-    max-width: 80px;
-    height: auto;
+.logo-desarrollador img{
+max-width:70px;
+height:auto;
+transition:transform 0.3s;
 }
 
-.logo-empresa img {
-    animation: girar 5s linear infinite;
+/* efecto hover elegante */
+
+.logo-empresa img:hover,
+.logo-desarrollador img:hover{
+transform:scale(1.08);
 }
 
-.titulo-sistema {
-    text-align: center;
+/* animación solo en escritorio */
+
+@media (min-width:700px){
+.logo-empresa img{
+animation:girar 8s linear infinite;
+}
 }
 
-.titulo-sistema h1 {
-    margin: 0;
-    font-size: 22px;
-    color: #fff;
+/* animación */
+
+@keyframes girar{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
 }
 
-.titulo-sistema small {
-    display: block;
-    font-size: 12px;
-    color: #b5e7c5;
-    margin-top: 2px;
+/* TITULO */
+
+.titulo-sistema{
+text-align:center;
 }
 
-/* Animación del logo */
-@keyframes girar {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.titulo-sistema h1{
+margin:0;
+font-size:22px;
+font-weight:bold;
+color:#ffffff;
+letter-spacing:1px;
 }
 
-/* Contenedor principal */
-.container {
-    padding: 20px;
-    max-width: 800px;
-    margin: auto;
+.titulo-sistema small{
+display:block;
+font-size:12px;
+color:#9fe5b3;
+margin-top:3px;
 }
 
-/* Formularios y botones */
-label {
-    display: block;
-    margin-top: 12px;
-    font-weight: bold;
+/* RESPONSIVE */
+
+@media (max-width:480px){
+
+.logo-empresa img,
+.logo-desarrollador img{
+max-width:50px;
 }
 
-input, select, textarea, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 8px;
-    border: none;
-    font-size: 14px;
-    box-sizing: border-box;
+.titulo-sistema h1{
+font-size:16px;
 }
 
-button {
-    background: #28a745;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-button:hover { background: #1e8c3f; }
-button.danger { background: #dc3545; }
-button.danger:hover { background: #a71d2a; }
-
-/* Tablas */
-.table {
-    margin-top: 15px;
-    background: white;
-    color: black;
-    border-radius: 10px;
-    padding: 10px;
-    overflow-x: auto;
+.titulo-sistema small{
+font-size:9px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
 }
 
-th, td {
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-    text-align: center;
-}
-
-.total {
-    margin-top: 15px;
-    font-weight: bold;
-    text-align: right;
-}
-
-hr {
-    margin: 25px 0;
-    border: none;
-    border-top: 1px solid #ccc;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-    .logo-empresa img,
-    .logo-desarrollador img {
-        max-width: 60px;
-    }
-    .titulo-sistema h1 {
-        font-size: 18px;
-    }
-    .titulo-sistema small {
-        font-size: 10px;
-    }
-}
 </style>
 </head>
 <body>
