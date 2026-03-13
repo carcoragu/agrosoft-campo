@@ -3,237 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgroSoft | Campo</title>
-<style>
+<title>AgroSoft | Campo APP</title>
 
-/* HEADER APP PROFESIONAL */
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#28a745">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon-192.png">
 
-.header-sistema{
-display:grid;
-grid-template-columns:auto 1fr auto;
-align-items:center;
-padding:12px 15px;
-background:rgba(10,31,46,0.95);
-backdrop-filter:blur(6px);
-box-shadow:0 4px 10px rgba(0,0,0,0.4);
-border-bottom:1px solid rgba(255,255,255,0.08);
-gap:10px;
-}
-
-/* LOGOS */
-
-.logo-empresa img,
-.logo-desarrollador img{
-max-width:70px;
-height:auto;
-transition:transform 0.3s;
-}
-
-/* efecto hover elegante */
-
-.logo-empresa img:hover,
-.logo-desarrollador img:hover{
-transform:scale(1.08);
-}
-
-/* animación solo en escritorio */
-
-@media (min-width:700px){
-.logo-empresa img{
-animation:girar 8s linear infinite;
-}
-}
-
-/* animación */
-
-@keyframes girar{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
-}
-
-/* TITULO */
-
-.titulo-sistema{
-text-align:center;
-}
-
-.titulo-sistema h1{
-margin:0;
-font-size:22px;
-font-weight:bold;
-color:#ffffff;
-letter-spacing:1px;
-}
-
-.titulo-sistema small{
-display:block;
-font-size:12px;
-color:#9fe5b3;
-margin-top:3px;
-}
-
-/* RESPONSIVE */
-
-@media (max-width:480px){
-
-.logo-empresa img,
-.logo-desarrollador img{
-max-width:50px;
-}
-
-.titulo-sistema h1{
-font-size:16px;
-}
-
-.titulo-sistema small{
-font-size:9px;
-}
-
-}
-
-</style>
+<!-- Estilos -->
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Encabezado -->
-<header class="header-sistema">
-    <div class="logo-empresa">
-        <img src="logo_fainver.png" alt="FAINVER EAS">
-    </div>
-    <div class="titulo-sistema">
-        <h1>AgroSoft Campo</h1>
-        <small>Control de Compras y Costos en Ganadería</small>
-    </div>
-    <div class="logo-desarrollador">
-        <img src="logoisabsoft.png" alt="IsabSoft">
-    </div>
-</header>
-
-<!-- Contenido principal -->
-<div class="container">
-    <h3>Activación de Plan</h3>
-    <label>Código de Activación</label>
-    <input type="text" id="codigoPlan" placeholder="Ingrese código de licencia">
-    <button onclick="activarPlan()">Activar Plan</button>
-    <p>Plan activo: <span id="planActivo">Ninguno</span></p>
-    <hr>
-
-    <h3>Datos de la Compra</h3>
-    <label>Nº Compra</label><input type="text" id="numeroCompra" readonly>
-    <label>Fecha</label><input type="date" id="fecha">
-    <label>Proveedor</label><input type="text" id="proveedor">
-    <label>CI / RUC</label><input type="text" id="ci">
-    <label>Documento</label><input type="text" id="documento">
-    <hr>
-
-    <h3>Detalle de Animales</h3>
-    <label>Nº Caravana</label><input type="text" id="caravana">
-    <label>Peso Vivo (kg)</label><input type="number" id="peso">
-    <label>Precio por Kg (Gs.)</label><input type="number" id="precioKg">
-    <label>Precio Cerrado (Gs.)</label><input type="number" id="precioAnimal">
-    <button onclick="agregarAnimal()">Agregar Animal</button>
-
-    <div class="table">
-        <table id="tablaAnimales">
-            <thead>
-                <tr>
-                    <th>Caravana</th>
-                    <th>Peso</th>
-                    <th>Precio Kg</th>
-                    <th>Precio Cerrado</th>
-                    <th>Total Gs.</th>
-                    <th>X</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <div class="total">
-        Total Animales: ₲ <span id="totalAnimales">0</span><br>
-        Precio real de costo por animal: ₲ <span id="precioReal">0</span>
-    </div>
-    <hr>
-
-    <h3>Gastos de la Operación</h3>
-    <label>Fecha</label><input type="date" id="fechaGasto">
-    <label>Tipo de Gasto</label>
-    <select id="tipoGastoCompra">
-        <option value="flete">Flete</option>
-        <option value="comision">Pago de Comisión</option>
-        <option value="colcat">Pago a COLCAT</option>
-        <option value="varios">Varios</option>
-    </select>
-    <label>Cantidad</label><input type="number" id="cantidadGastoCompra">
-    <label>Importe Unitario</label><input type="number" id="importeUnitarioGastoCompra">
-    <label>Observación</label><textarea id="obsGastoCompra"></textarea>
-    <button onclick="agregarGastoCompra()">Agregar Gasto</button>
-
-    <div class="table">
-        <table id="tablaGastosCompra">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Tipo</th>
-                    <th>Total</th>
-                    <th>X</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <div class="total">
-        Total Gastos: ₲ <span id="totalGastosCompra">0</span>
-    </div>
+<!-- Splash Screen -->
+<div id="splash-screen">
+  <img src="logo_fainver.png" alt="FAINVER EAS">
+  <h2>AgroSoft Campo</h2>
+  <small>Control de Compras y Costos en Ganadería</small>
 </div>
 
+<!-- HEADER APP -->
+<header class="header-sistema">
+  <div class="logo-empresa">
+    <img src="logo_fainver.png" alt="FAINVER EAS">
+  </div>
+  <div class="titulo-sistema">
+    <h1>AgroSoft Campo</h1>
+    <small>Control de Compras y Costos en Ganadería</small>
+  </div>
+  <div class="logo-desarrollador">
+    <img src="logoisabsoft.png" alt="IsabSoft">
+  </div>
+</header>
+
+<!-- CONTENIDO PRINCIPAL -->
+<div class="container">
+  <!-- Aquí van tus formularios, tablas, botones... -->
+</div>
+
+<!-- MENÚ INFERIOR APP -->
+<div class="menu-app">
+  <button><span>🐄</span>Animales</button>
+  <button><span>💰</span>Gastos</button>
+  <button><span>📊</span>Reportes</button>
+  <button><span>⚙️</span>Configuración</button>
+</div>
+
+<!-- JS -->
+<script src="app.js"></script>
 <script>
-// Funciones básicas
-function activarPlan() {
-    const codigo = document.getElementById('codigoPlan').value;
-    document.getElementById('planActivo').textContent = codigo ? "Plan Activado" : "Ninguno";
-}
+window.addEventListener('load', ()=>{
+  const splash = document.getElementById('splash-screen');
+  setTimeout(()=>{
+    splash.style.opacity='0';
+    setTimeout(()=>{ splash.style.display='none'; },500);
+  },1500);
+});
 
-function agregarAnimal() {
-    const caravana = document.getElementById('caravana').value;
-    const peso = parseFloat(document.getElementById('peso').value)||0;
-    const precioKg = parseFloat(document.getElementById('precioKg').value)||0;
-    const precioAnimal = parseFloat(document.getElementById('precioAnimal').value)||0;
-    const total = precioAnimal || (peso*precioKg);
-    if(!caravana) return alert("Ingrese Nº de Caravana");
-    const tbody = document.getElementById('tablaAnimales').querySelector('tbody');
-    const row = tbody.insertRow();
-    row.innerHTML = `<td>${caravana}</td><td>${peso}</td><td>${precioKg}</td><td>${precioAnimal}</td><td>${total}</td><td><button class="danger" onclick="this.closest('tr').remove(); actualizarTotales()">X</button></td>`;
-    actualizarTotales();
-}
-
-function actualizarTotales() {
-    const rows = document.getElementById('tablaAnimales').querySelectorAll('tbody tr');
-    let total = 0;
-    rows.forEach(r => total += parseFloat(r.cells[4].textContent)||0);
-    document.getElementById('totalAnimales').textContent = total;
-    document.getElementById('precioReal').textContent = rows.length ? (total/rows.length).toFixed(2) : 0;
-}
-
-function agregarGastoCompra() {
-    const fecha = document.getElementById('fechaGasto').value;
-    const tipo = document.getElementById('tipoGastoCompra').value;
-    const cantidad = parseFloat(document.getElementById('cantidadGastoCompra').value)||0;
-    const importe = parseFloat(document.getElementById('importeUnitarioGastoCompra').value)||0;
-    const total = cantidad*importe;
-    if(!fecha||!tipo) return alert("Ingrese fecha y tipo de gasto");
-    const tbody = document.getElementById('tablaGastosCompra').querySelector('tbody');
-    const row = tbody.insertRow();
-    row.innerHTML = `<td>${fecha}</td><td>${tipo}</td><td>${total}</td><td><button class="danger" onclick="this.closest('tr').remove(); actualizarTotalGastos()">X</button></td>`;
-    actualizarTotalGastos();
-}
-
-function actualizarTotalGastos() {
-    const rows = document.getElementById('tablaGastosCompra').querySelectorAll('tbody tr');
-    let total = 0;
-    rows.forEach(r => total += parseFloat(r.cells[2].textContent)||0);
-    document.getElementById('totalGastosCompra').textContent = total;
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js')
+  .then(()=>console.log("Service Worker registrado ✅"))
+  .catch(err=>console.log("Error SW:",err));
 }
 </script>
 
