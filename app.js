@@ -205,3 +205,30 @@ splash.style.display="none"
 },2000)
 
 })
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+
+e.preventDefault();
+
+deferredPrompt = e;
+
+let installBtn = document.createElement("button");
+
+installBtn.innerText = "Instalar App";
+
+installBtn.style.position="fixed";
+installBtn.style.bottom="20px";
+installBtn.style.right="20px";
+installBtn.style.padding="12px";
+
+document.body.appendChild(installBtn);
+
+installBtn.addEventListener("click",()=>{
+
+deferredPrompt.prompt();
+
+});
+
+});
