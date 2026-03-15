@@ -171,23 +171,34 @@ renderHistorial()
 
 function exportarExcel(){
 
-let wb1=XLSX.utils.book_new()
-let ws1=XLSX.utils.json_to_sheet(historial)
-XLSX.utils.book_append_sheet(wb1,ws1,"Compras")
-XLSX.writeFile(wb1,"Compras.xls")
+let compras=[]
 
-let wb2=XLSX.utils.book_new()
+historial.forEach(c=>{
+
+compras.push({
+
+numero:c.numero,
+fecha:c.fecha,
+proveedor:c.proveedor,
+total:c.total
+
+})
+
+})
+
+let wb=XLSX.utils.book_new()
+
+let ws1=XLSX.utils.json_to_sheet(compras)
 let ws2=XLSX.utils.json_to_sheet(animales)
-XLSX.utils.book_append_sheet(wb2,ws2,"Animales")
-XLSX.writeFile(wb2,"Animales.xls")
-
-let wb3=XLSX.utils.book_new()
 let ws3=XLSX.utils.json_to_sheet(gastos)
-XLSX.utils.book_append_sheet(wb3,ws3,"Gastos")
-XLSX.writeFile(wb3,"Gastos.xls")
+
+XLSX.utils.book_append_sheet(wb,ws1,"Compras")
+XLSX.utils.book_append_sheet(wb,ws2,"DetalleAnimales")
+XLSX.utils.book_append_sheet(wb,ws3,"Gastos")
+
+XLSX.writeFile(wb,"AgroSoft_Compras.xls")
 
 }
-
 cargarLocal()
 
 window.addEventListener("load", ()=>{
