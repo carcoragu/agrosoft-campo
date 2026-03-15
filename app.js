@@ -189,3 +189,19 @@ XLSX.writeFile(wb3,"Gastos.xls")
 }
 
 cargarLocal()
+
+window.addEventListener("load", ()=>{
+
+setTimeout(()=>{
+
+let splash=document.getElementById("splash")
+
+if(splash){
+
+splash.style.display="none"
+
+}
+
+},2000)
+
+})
