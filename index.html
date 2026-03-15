@@ -1,72 +1,197 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgroSoft | Campo APP</title>
+<meta name="viewport" content="width=1200">
 
-<!-- PWA -->   
+<title>AgroSoft Campo</title>
+
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#28a745">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#2e7d32">
 
-<!-- Estilos -->
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-<!-- Splash Screen -->
-<div id="splash-screen">
-  <img src="logo_fainver.png" alt="FAINVER EAS">
-  <h2>AgroSoft Campo</h2>
-  <small>Control de Compras y Costos en Ganadería</small>
+<header>
+
+<div class="logo">
+<img src="logo_fainver.png">
 </div>
 
-<!-- HEADER APP -->
-<header class="header-sistema">
-  <div class="logo-empresa">
-    <img src="logo_fainver.png" alt="FAINVER EAS">
-  </div>
-  <div class="titulo-sistema">
-    <h1>AgroSoft Campo</h1>
-    <small>Control de Compras y Costos en Ganadería</small>
-  </div>
-  <div class="logo-desarrollador">
-    <img src="logoisabsoft.png" alt="IsabSoft">
-  </div>
+<div class="titulo">
+<h1>AgroSoft Campo</h1>
+<p>Registro de Compras y Gastos en Ganadería</p>
+</div>
+
+<div class="logo2">
+<img src="logoisabsoft.png">
+</div>
+
 </header>
 
-<!-- CONTENIDO PRINCIPAL -->
+<div class="dashboard">
+
+<div class="card">
+<h3>Animales</h3>
+<span id="dashAnimales">0</span>
+</div>
+
+<div class="card">
+<h3>Total Animales</h3>
+<span id="dashTotalAnimales">0</span>
+</div>
+
+<div class="card">
+<h3>Total Gastos</h3>
+<span id="dashTotalGastos">0</span>
+</div>
+
+</div>
+
 <div class="container">
-  <!-- Aquí van tus formularios, tablas, botones... -->
+
+<h2>Datos de Compra</h2>
+
+<label>Nº Compra</label>
+<input id="numeroCompra" readonly>
+
+<label>Fecha</label>
+<input type="date" id="fechaCompra">
+
+<label>Proveedor</label>
+<input id="proveedor">
+
+<label>CI / RUC</label>
+<input id="ci">
+
+<label>Documento</label>
+<input id="documento">
+
+<hr>
+
+<h2>Animales</h2>
+
+<label>Caravana</label>
+<input id="caravana">
+
+<label>Peso</label>
+<input type="number" id="peso">
+
+<label>Precio Kg</label>
+<input type="number" id="precioKg">
+
+<label>Precio Animal</label>
+<input type="number" id="precioAnimal">
+
+<button onclick="agregarAnimal()">Agregar Animal</button>
+
+<table id="tablaAnimales">
+
+<thead>
+<tr>
+<th>Caravana</th>
+<th>Peso</th>
+<th>Precio Kg</th>
+<th>Precio Animal</th>
+<th>Total</th>
+<th>X</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+<p>Total Animales: ₲ <span id="totalAnimales">0</span></p>
+
+<hr>
+
+<h2>Gastos</h2>
+
+<label>Fecha</label>
+<input type="date" id="fechaGasto">
+
+<label>Tipo</label>
+
+<select id="tipoGasto">
+<option>Flete</option>
+<option>Comision</option>
+<option>COLCAT</option>
+<option>Varios</option>
+</select>
+
+<label>Cantidad</label>
+<input type="number" id="cantidadGasto">
+
+<label>Importe</label>
+<input type="number" id="importeGasto">
+
+<label>Observación</label>
+<textarea id="obsGasto"></textarea>
+
+<button onclick="agregarGasto()">Agregar Gasto</button>
+
+<table id="tablaGastos">
+
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Tipo</th>
+<th>Total</th>
+<th>Obs</th>
+<th>X</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+<p>Total Gastos: ₲ <span id="totalGastos">0</span></p>
+
+<hr>
+
+<button onclick="guardarCompra()">Guardar Compra</button>
+<button onclick="exportarExcel()">Exportar Excel</button>
+
+<hr>
+
+<h2>Historial</h2>
+
+<table id="tablaHistorial">
+
+<thead>
+<tr>
+<th>N°</th>
+<th>Fecha</th>
+<th>Proveedor</th>
+<th>Total</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
 </div>
 
-<!-- MENÚ INFERIOR APP -->
-<div class="menu-app">
-  <button><span>🐄</span>Animales</button>
-  <button><span>💰</span>Gastos</button>
-  <button><span>📊</span>Reportes</button>
-  <button><span>⚙️</span>Configuración</button>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
-<!-- JS -->
 <script src="app.js"></script>
-<script>
-window.addEventListener('load', ()=>{
-  const splash = document.getElementById('splash-screen');
-  setTimeout(()=>{
-    splash.style.opacity='0';
-    setTimeout(()=>{ splash.style.display='none'; },500);
-  },1500);
-});
 
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js')
-  .then(()=>console.log("Service Worker registrado ✅"))
-  .catch(err=>console.log("Error SW:",err));
+<script>
+
+if ("serviceWorker" in navigator) {
+
+navigator.serviceWorker.register("sw.js")
+
 }
+
 </script>
 
 </body>
