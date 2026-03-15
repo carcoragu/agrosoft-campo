@@ -243,3 +243,23 @@ deferredPrompt.prompt();
 });
 
 });
+
+function obtenerIDmovil(){
+
+let id = localStorage.getItem("agrosoft_id")
+
+if(!id){
+
+id = "MOVIL-" + Math.random().toString(36).substring(2,10)
+
+localStorage.setItem("agrosoft_id", id)
+
+}
+
+return id
+
+}
+
+let codigoMovil = obtenerIDmovil()
+
+console.log("Codigo movil:", codigoMovil)
